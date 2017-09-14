@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+	<canvas id="canvas" height="800" width="800"></canvas>
+	
+	<div id="inputs">
+		<div id="matrix">
+			<center>
+				<input class="matrixentry" type="text" id="11" value="1"><input class="matrixentry" type="text" id="12" value="1"><br>
+				<input class="matrixentry" type="text" id="21" value="1"><input class="matrixentry" type="text" id="22" value="0"><br>
+				<button id='buttonapply' onclick="applyMatrix()">apply</button>
+			</center>
+		</div>		
+	</div>
+
+</body>
+
+<head>
+	<script type="text/javascript">
+		
+		var canvas = document.getElementById('canvas')
+		var ctx = canvas.getContext('2d')
+
+		function clearCanvas() {
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+		}
+
+		function drawLine(x1,y1,x2,y2) {
+			ctx.strokeStyle = 'black'
+			ctx.beginPath()
+			ctx.moveTo(x1+canvas.width/2,y1+canvas.height/2)
+			ctx.lineTo(x2+canvas.width/2,y2+canvas.height/2)
+			ctx.stroke()
+			ctx.closePath()
+		}
+
+		function drawSegmentedLine(vertices) {
+			for(var i = 0; i < vertices.length - 1; i++) {
+				drawLine(vertices[i][0],vertices[i][1],
+					vertices[i+1][0],vertices[i+1][1])
+			}
+		}
+
+		var lattice = []
+		var step_lattice
+
+		function generateLattice(range,spacing) {
+			// verticals
+			for(var i = -range; i <= range; i++) {
+				l = []
+				for(var j = -range; j <= range; j++) {
+					l.push([i*spacing,j*spacing])
+				}
+				lattice.push(l)
+			}
+
+			// horizontals
+			for(var i = -range; i <= range; i++) {
+				l = []
+				for(var j = -range; j <= range; j++) {
+					l.push([j*spacing,i*spacing])
+				}
+				lattice.push(l)
+			}
+		}
+
+		function drawLattice(lat) {
+			clearCanvas()
+			for(var i = 0; i < lat.length; i++) {
+				drawSegmentedLine(lat[i])
+			}
+		}
+
+		generateLattice(4,50)
+		drawLattice(lattice)
+
+		var matrix = []
+		function updateMatrix() {
+			matrix = [[0,0],[0,0]]
+			matrix[0][0] = parseFloat(document.getElementById('11').value)
+			matrix[0][1] = parseFloat(document.getElementById('12').value)
+			matrix[1][0] = parseFloat(document.getElementById('21').value)
+			matrix[1][1] = parseFloat(document.getElementById('22').value)
+		}
+
+		function boundValue(val) {
+			if(val < -canvas.width/2) {
+				return -canvas.width/2
+			} else if(val > canvas.width/2) {
+				return canvas.width/2
+			}
+			return val
+		}
+
+		function matrixMultiply(v) {
+			return [
+				boundValue(matrix[0][0]*v[0] + matrix[0][1]*v[1]),
+				boundValue(matrix[1][0]*v[0] + matrix[1][1]*v[1])]
+		}
+
+		var new_lattice = []
+		var frames = 10
+		var new_counter = 0
+
+		function applyMatrix() {
+			new_lattice = []
+			updateMatrix()
+			for(var i = 0; i < lattice.length; i++) {
+				new_lattice.push([])
+				for(var j = 0; j < lattice[i].length; j++) {
+					new_lattice[i].push( matrixMultiply(lattice[i][j]) )
+				}
+			}
+
+			new_counter = frames
+		}
+
+		var steps = []
+
+		function update() {
+			steps = []
+			if(new_counter == frames) {
+				for(var f = 0; f < frames; f++) {
+					var step_lattice = []
+					for(var i = 0; i < lattice.length; i++) {
+						step_lattice.push([])
+						for(var j = 0; j < lattice[i].length; j++) {
+							var dx = (lattice[i][j][0] - new_lattice[i][j][0]) / (new_counter)
+							var dy = (lattice[i][j][1] - new_lattice[i][j][1]) / (new_counter)
+							step_lattice[i].push([
+									lattice[i][j][0] + dx,
+									lattice[i][j][1] + dy ])
+						}
+					}
+					steps.push(step_lattice)
+				}
+				new_counter--
+			}
+
+			if(new_counter > 0) {
+				drawLattice(steps[frames - new_counter])
+				new_counter--
+			}
+		}
+
+		setInterval(update, 50);
+
+
+	</script>
+
+	<style type="text/css">
+
+		#canvas {
+			border: 2px solid black;
+		}
+
+		#inputs {
+			position: fixed;
+			top: 50px;
+			left: 50px;
+		}
+		
+		.matrixentry {
+			width: 20px;
+		}
+
+		#buttonapply {
+			margin-top: 10px;
+		}
+
+	</style>
+
+</head>
+
+</html>

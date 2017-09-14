@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<body>
+	
+	
+	<div id="container">
+		
+		<div id="header">
+			<div id="title">Humanity House</div>
+			<br>
+			<div id="subtitle">Turning Dreams into Reality</div>
+		</div>
+
+		<div id="tabs">
+			<button class="tab" onclick="showContent('overview')">Overview</button>
+			<button class="tab" onclick="showContent('pictures')">Pictures</button>
+			<button class="tab" onclick="showContent('living')">Living</button>
+			<button class="tab" onclick="showContent('policies')">Policies</button>
+			<button class="tab" onclick="showContent('info')">Info</button>
+		</div>
+	
+		<div id="content">
+			
+			<div class="content_section" id="overview">
+				<h2>Overview</h2>
+				<p>Humanity House was conceived as a way to improve the future of humanity and to assist students interested in the future of humanity. Starting in the summer of 2017, Humanity House will offer the following opportunities for Reed students:</p>
+				<ul>
+					<li>
+						<b>Academic Resources</b> - Humanity House associates will have access to our resources for research on the future of humanity, including an online reference collection, The Imps, and traditional book collections in Portland and Palo Alto.
+					</li>
+					<li>
+						<b>Entrepreneurship Experience</b> - Humanity House associates can develop entrepreneurial skills by assuming responsible roles in projects sponsored by our parent organization, The YouSA,.
+					</li>
+					<li>
+						<b>Housing</b> - Humanity House looks forward to providing accommodation for up to four Reed students a short walk from the campus.
+					</li>
+				</ul>
+			</div>
+
+			<div class="content_section" id="pictures">
+				<h2>Pictures</h2>
+				<p>For your viewing pleasure, here are some pictures of the house:</p>
+				<canvas id="house_map"></canvas>
+			</div>
+
+			<div class="content_section" id="living">
+				some content! living
+			</div>
+
+			<div class="content_section" id="policies">
+				some content! policies
+			</div>
+
+			<div class="content_section" id="info">
+				some content! info
+			</div>
+
+		</div>
+		
+		<div id="footer"></div>
+
+		<img src="assets/images/house_map.png" style="display:none;">
+	
+	</div>
+
+</body>
+
+<head>
+
+	<title>Humanity House</title>
+
+	<script type="text/javascript" src="assets/jquery-3.2.1.js"></script>
+
+	<script type="text/javascript">
+
+		$(".content_section").toggleClass('show_section hide_section')
+		function showContent(name) {
+			$("#" + name).toggleClass('hide_section show_section')
+		}
+
+		function getMousePos(canvas, evt) {
+        	var rect = canvas.getBoundingClientRect();
+        	return {
+          		x: evt.clientX - rect.left,
+         		y: evt.clientY - rect.top
+        	};
+    	}
+
+    	canvas = document.getElementById('house_map')
+    	img = document.getElementById('house_map_img')
+    	canvas.
+
+    	var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    var img=document.getElementById("scream");
+    ctx.drawImage(img,10,10);
+    	
+    	canvas.addEventListener('click', function(evt) {
+        	var mousePos = getMousePos(canvas, evt);
+        	console.log(mousePos.x + ":" + mousePos.y)
+      	}, false);
+
+	</script>
+
+	<style type="text/css">
+		
+		#container {
+			width: 70%;
+			margin-left: 15%;
+		}
+
+		#header {
+			margin-top: 20px;
+			padding: 20px;
+			height: 100px;
+			background-color: rgb(0,100,0);
+			color: white;
+			font-family: courier;
+			text-align: left;
+		}
+
+		#title {
+			font-size: 40px;
+		}
+
+		#subtitle {
+			font-size: 20px;
+		}
+
+		.tab {
+			padding: 10px; 
+			width: 100%;
+			height: 50px;
+			background-color: black;
+			color: white;
+			font-size: 20px;
+			font-family: courier;
+		}
+
+		.tab:hover {
+			background-color: gray;
+		}
+
+		.content_section {
+			margin-top: 20px;
+			width: 90%;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			padding-left: 5%;
+			padding-right: 5%;
+			background-color: white;
+			border: 4px solid black;
+			font-family: courier;
+		}
+
+		.show_section {
+			display: block;
+		}
+
+		.hide_section {
+			display: none;
+		}
+
+	</style>
+
+</head>
+
+</html>

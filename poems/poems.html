@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<div id="sidebar">
+		<center>
+			<button class="poem_button w3-ripple" onclick="show(1)">poem 1</button>
+			<br>
+			<button class="poem_button" onclick="show(2)">poem 2</button>
+		</center>
+	</div>
+	<div class="poem" id="poem1">
+		<p>you see, I've found it<br>the ship, it sails away<br>towards me<br>from you<br>still in the waves<br>static on the surface<br>it was hard to see through<br>but easy to look back<br>and back -<br>- and forth</p><p>there was an angel on it's stern<br>a triangle in the heavens<br>it was crossing<br>knowing</p><p>I thought we saw the same lines<br>but the stern's angle was 90º<br>nothing refracted<br>you don't see</p><p>oh<br>I saw nothing</p><p>and it was beautiful</p><p>I saw nothing, and still it's moving<br>moving into sight, but out of mind<br>where'd you go?</p>
+	</div>
+	<div class="poem" id="poem2">
+		<p>this planet doesn't have moons<br>- a lonely planet<br>stones passed for stones<br>rocks for rocks<br>waves in water<br>ashes made waves<br>the loneliness filled every crevice<br>the waves failed<br>a little fish played in the desert<br>this planet doesn't have moons<br>its a very lonely planet<br>stones passed for stones<br>the waves in the water<br>ashes made the waves<br>the loneliness filled every crevice<br>the the waves didn't fill<br>a little fish played in the desert</p><p>it swam in the feeling<br>and sunk through the sand<br>the substance dug deeper than water from those cracks<br>broke through the water itself<br>though it's absence<br>the little fish swam through all of it</p><p>water gushed up from the planet's core<br>and shot the little fish up into the air<br>where the fish was well at home<br>what's wrong up here?<br>home is the same as I felt before<br>it must be in the air<br>the planet floats in the same spot as always</p><p>always at home<br>no ground<br>in air, with water, it stays the same<br>though things move through it<br>the air stays the same<br>though it moves around things<br>the planet collapses when the cracks, that substance for swimming reaches it's core<br>the fish swims into the abyss<br>its original destination<br>before</p>
+	</div>
+</body>
+
+<head>
+	<title>Sum of Poems</title>
+
+	<style type="text/css">
+
+		body {
+			background-color: black;
+		}
+
+		#sidebar {
+			/*background-color: white;*/
+		   	width: 200px;
+		   	height: 90%;
+		   	position: fixed;
+		   	right: 20px;
+		   	top: 20px;
+		   	border: 1px solid black;
+		}
+
+		.poem_button {
+		    background-color: #e7e7e7;
+		    color: black;
+		    border: none;
+		    padding: 15px 32px;
+		    margin: 20px;
+		    text-align: center;
+		    text-decoration: none;
+		    font-family: courier;
+		    font-size: 16px;
+		}
+
+		.poem {
+			font-family: courier;
+			line-height: 2;
+			display: block;
+			margin-left: 20px;
+			margin-top: 20px;
+  			transition: all 800ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+		}
+
+		.poem_hide {
+			display: none;
+			margin-left: -200px;
+		}
+
+		p {
+			color: rgba(255,255,255,0.1);
+   			text-shadow: 0px 5px 5px rgba(255,255,255,0.3);
+  			transition: all 800ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+		}
+
+		p:hover {
+			color: white;
+   			text-shadow: 0 0 0px rgba(0,0,0,0);
+  			transition: all 800ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+		}
+	</style>
+
+	<script type="text/javascript">
+
+		// scroll page automatically
+
+		var cursorX;
+		var cursorY;
+		document.onmousemove = function(e){
+		    cursorX = e.pageX;
+		    cursorY = e.pageY;
+		}
+
+		setInterval(scrollPage, 10)
+		function scrollPage() {
+			// scroll down
+			if(cursorY > window.innerHeight*2/3) {
+				window.scrollBy(0,1)
+
+			// scroll up
+			} else if(cursorY < window.innerHeight/3) {
+				window.scrollBy(0,-1)
+			}
+		}
+
+		// show and hide poems
+
+		var poem_divs = document.getElementsByClassName("poem")
+
+		for(var i = 0; i < poem_divs.length; i++) {
+			poem_divs[i].classList.add("poem_hide")
+		}
+
+		var shown = null
+
+		function show(id) {
+			if(shown) {
+				poem_divs[shown-1].classList.toggle("poem_hide")
+			}
+			shown = id
+			poem_divs[shown-1].classList.toggle("poem_hide")
+		}
+	</script>
+</head>
+
+
+</html>
